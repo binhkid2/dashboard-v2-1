@@ -43,14 +43,14 @@ const CallBackZalo: React.FC = () => {
           const url = "https://oauth.zaloapp.com/v4/access_token";
           const data = new URLSearchParams();
           data.append("code", code);
-          data.append("app_id", import.meta.env.VITE_APP_ID); //VITE_APP_ID
+          data.append("app_id", import.meta.env.VITE_APP_ID); 
           data.append("grant_type", "authorization_code");
           data.append("code_verifier", codeVerifier);
 
           const config = {
             headers: {
               "Content-Type": "application/x-www-form-urlencoded",
-              secret_key: import.meta.env.VITE_SECRET_KEY, //VITE_SECRET_KEY
+              secret_key: import.meta.env.VITE_SECRET_KEY, 
             },
           };
 
@@ -66,7 +66,7 @@ const CallBackZalo: React.FC = () => {
           const initUser={
             name: 'Unknow Name',
             zaloId:'',
-            avatar:''
+            avatar:'https://res.cloudinary.com/yenvietsoft/image/upload/v1719123208/theheai-resource/user_kakjac.jpg'
         }
         let userInfoReturn = initUser
           try{
@@ -75,13 +75,13 @@ const CallBackZalo: React.FC = () => {
           };
   
           // Make the GET request using Axios
-          const res = await axios.get('https://graph.zalo.me/v2.0/me?fields=id,name,picture', { headers });
+          const resGetUserInfoZalo = await axios.get('https://graph.zalo.me/v2.0/me?fields=id,name,picture', { headers });
           // Handle successful response
-          console.log('User Info:', res.data);
+          console.log('User Info:', resGetUserInfoZalo.data);
            userInfoReturn=  {
-            name: response.data.name,
-            zaloId: response.data.id,
-            avatar:response.data.picture.data.url
+            name: resGetUserInfoZalo.data.name,
+            zaloId: resGetUserInfoZalo.data.id,
+            avatar:resGetUserInfoZalo.data.picture.data.url
           }
           console.log('success userInfoReturn',userInfoReturn)
   // Check if userInfo is stored to database yet? if not then save it.
