@@ -78,16 +78,10 @@ const CallBackZalo: React.FC = () => {
           const resGetUserInfoZalo = await axios.get('https://graph.zalo.me/v2.0/me?fields=id,name,picture', { headers });
           // Handle successful response
           console.log('User Info:', resGetUserInfoZalo.data);
-           userInfoReturn=  {
-            name: resGetUserInfoZalo.data.name,
-            zaloId: resGetUserInfoZalo.data.id,
-            avatar:resGetUserInfoZalo.data.picture.data.url
-          }
-          console.log('success userInfoReturn',userInfoReturn)
   // Check if userInfo is stored to database yet? if not then save it.
-  const zaloIdReturn = userInfoReturn.zaloId
+  const zaloIdReturn = resGetUserInfoZalo.data.id
   console.log(' zaloIdReturn',zaloIdReturn)
-  const searchUrl = `${pbUrl}/api/collections/users/records?filter=(zaloId=${zaloIdReturn})`;
+  const searchUrl = `${pbUrl}/api/collections/users/records?filter=(zaloId='${zaloIdReturn}')`;
 
   const dbResponse = await axios.get(searchUrl);
   console.log(dbResponse.data);
@@ -128,8 +122,6 @@ const CallBackZalo: React.FC = () => {
     setUserInfo(createdUser);
   }
   navigate("/profile");
-
-
           }
           catch{
              toastError('Error when get user Info:' );
