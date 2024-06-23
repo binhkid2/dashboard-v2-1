@@ -11,7 +11,7 @@ export const initUser= {
     id:'',
     name: 'Unknow Name',
     zaloId:'',
-    avatar:'',
+    avatar:'https://res.cloudinary.com/yenvietsoft/image/upload/v1719123208/theheai-resource/user_kakjac.jpg',
     currentCredit:0,
     prompt:[],
     proDayLeft:0
