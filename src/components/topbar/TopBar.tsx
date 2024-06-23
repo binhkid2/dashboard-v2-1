@@ -18,7 +18,7 @@ export function TopBar() {
           <div className="relative ml-5 flex w-9/12 items-center justify-end p-1 sm:right-auto sm:mr-0 md:w-1/4">
            
            <NotificationIcon/>
-           <img src={userInfo.avatar} alt="user" className="h-6 w-6 object-cover "/>
+           <img src={userInfo.avatar} alt="user" className="h-10 w-10 rounded-full object-cover "/>
           </div>
         </div>
       </div>

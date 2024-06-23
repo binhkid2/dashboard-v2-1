@@ -18,7 +18,7 @@ const CallBackZalo: React.FC = () => {
   const searchParams = new URLSearchParams(location.search);
   const [userInfo, setUserInfo] = useAtom(userInfoStore);
   const [, setZaloRefreshToken] = useAtom(zaloRefreshTokenAtom);
-  const [, setZaloAccessToken] = useAtom(zaloAccessTokenAtom);
+  const [zaloAccessToken, setZaloAccessToken] = useAtom(zaloAccessTokenAtom);
 
   // This effect will run every time userInfo changes
   useEffect(() => {
@@ -71,7 +71,7 @@ const CallBackZalo: React.FC = () => {
         let userInfoReturn = initUser
           try{
             const headers = {
-              'access_token': response.data.access_token
+              'access_token': zaloAccessToken
           };
   
           // Make the GET request using Axios
