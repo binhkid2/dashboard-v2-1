@@ -37,7 +37,7 @@ async function getUserAccessToken(refreshToken: string, appId: string, secretKey
 export async function loginWithZalo(code_challenge:string,state:string) {
     try {
       console.log("login now....");
-      const callbackUrl=encodeURIComponent('https://dashboard-v2-one-delta.vercel.app/auth/callback/zalo') 
+      const callbackUrl=encodeURIComponent('http://dashboard.theheai.xyz/auth/callback/zalo') 
     //  const askPermissionUrl = `https://oauth.zaloapp.com/v4/permission?app_id=${VITE_APP_ID}&redirect_uri=${callbackUrl}&code_challenge=${code_challenge}&state=${state}`;
     const askPermissionUrl = `https://oauth.zaloapp.com/v4/permission?app_id=4220696386833253137&redirect_uri=${callbackUrl}&code_challenge=${code_challenge}&state=${state}`;
       console.log(askPermissionUrl);
