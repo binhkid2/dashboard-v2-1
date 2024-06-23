@@ -16,14 +16,10 @@ const CallBackZalo: React.FC = () => {
   const navigate = useNavigate();
   // Create a URLSearchParams object from the query string
   const searchParams = new URLSearchParams(location.search);
-  const [userInfo, setUserInfo] = useAtom(userInfoStore);
+  const [, setUserInfo] = useAtom(userInfoStore);
   const [, setZaloRefreshToken] = useAtom(zaloRefreshTokenAtom);
   const [zaloAccessToken, setZaloAccessToken] = useAtom(zaloAccessTokenAtom);
 
-  // This effect will run every time userInfo changes
-  useEffect(() => {
-    console.log('userInfo changed:', userInfo);
-  }, [userInfo]);
 
   const codeVerifier = useAtomValue(codeVerifierAtom);
 
@@ -98,6 +94,7 @@ const CallBackZalo: React.FC = () => {
       proDayLeft: dbResponse.data.items.proDayLeft,
     };
     setUserInfo(oldUser);
+    navigate("/");
   } else {
     // User not in database yet. Create new user in the database
     const data = {
@@ -121,8 +118,9 @@ const CallBackZalo: React.FC = () => {
       proDayLeft: createdUserResponse.proDayLeft,
     };
     setUserInfo(createdUser);
+    navigate("/");
   }
-  navigate("/");
+
           }
           catch{
              toastError('Error when get user Info:' );
