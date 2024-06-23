@@ -84,55 +84,58 @@ const CallBackZalo: React.FC = () => {
             avatar:response.data.picture.data.url
           }
           console.log('success userInfoReturn',userInfoReturn)
+  // Check if userInfo is stored to database yet? if not then save it.
+  const zaloIdReturn = userInfoReturn.zaloId
+  console.log(' zaloIdReturn',zaloIdReturn)
+  const searchUrl = `${pbUrl}/api/collections/users/records?filter=(zaloId=${zaloIdReturn})`;
+
+  const dbResponse = await axios.get(searchUrl);
+  console.log(dbResponse.data);
+  if (dbResponse.data.items.length > 0) {
+    // User in database already
+    const oldUser = {
+      id: dbResponse.data.items.id,
+      name: dbResponse.data.items.name,
+      zaloId: dbResponse.data.items.zaloId,
+      avatar: dbResponse.data.items.avatar,
+      currentCredit: dbResponse.data.items.currentCredit,
+      prompt: dbResponse.data.items.prompt || [],
+      proDayLeft: dbResponse.data.items.proDayLeft,
+    };
+    setUserInfo(oldUser);
+  } else {
+    // User not in database yet. Create new user in the database
+    const data = {
+      password: "12345678",
+      passwordConfirm: "12345678",
+      name: userInfoReturn.name,
+      currentCredit: 3000, // Free trial 3000
+      prompt: promptData,
+      proDayLeft: 0,
+      zaloId: userInfoReturn.zaloId,
+      avatar: userInfoReturn.avatar,
+    };
+    const createdUserResponse = await pb.collection("users").create(data);
+    const createdUser = {
+      id: createdUserResponse.id,
+      name: createdUserResponse.name,
+      zaloId: createdUserResponse.zaloId,
+      avatar: createdUserResponse.avatar,
+      currentCredit: createdUserResponse.currentCredit,
+      prompt: createdUserResponse.prompt || [],
+      proDayLeft: createdUserResponse.proDayLeft,
+    };
+    setUserInfo(createdUser);
+  }
+  navigate("/profile");
+
+
           }
           catch{
              toastError('Error when get user Info:' );
             userInfoReturn=  initUser
           }
 
-          // Check if userInfo is stored to database yet? if not then save it.
-          const zaloIdReturn = userInfoReturn.zaloId
-          const searchUrl = `${pbUrl}/api/collections/users/records?filter=(zaloId=${zaloIdReturn})`;
-
-          const dbResponse = await axios.get(searchUrl);
-          console.log(dbResponse.data);
-          if (dbResponse.data.items.length > 0) {
-            // User in database already
-            const oldUser = {
-              id: dbResponse.data.items.id,
-              name: dbResponse.data.items.name,
-              zaloId: dbResponse.data.items.zaloId,
-              avatar: dbResponse.data.items.avatar,
-              currentCredit: dbResponse.data.items.currentCredit,
-              prompt: dbResponse.data.items.prompt || [],
-              proDayLeft: dbResponse.data.items.proDayLeft,
-            };
-            setUserInfo(oldUser);
-          } else {
-            // User not in database yet. Create new user in the database
-            const data = {
-              password: "12345678",
-              passwordConfirm: "12345678",
-              name: userInfoReturn.name,
-              currentCredit: 3000, // Free trial 3000
-              prompt: promptData,
-              proDayLeft: 0,
-              zaloId: userInfoReturn.zaloId,
-              avatar: userInfoReturn.avatar,
-            };
-            const createdUserResponse = await pb.collection("users").create(data);
-            const createdUser = {
-              id: createdUserResponse.id,
-              name: createdUserResponse.name,
-              zaloId: createdUserResponse.zaloId,
-              avatar: createdUserResponse.avatar,
-              currentCredit: createdUserResponse.currentCredit,
-              prompt: createdUserResponse.prompt || [],
-              proDayLeft: createdUserResponse.proDayLeft,
-            };
-            setUserInfo(createdUser);
-          }
-          navigate("/profile");
         } catch (error) {
            toastError('Error during authentication process:');
           toastError("Error when saving user to database");
