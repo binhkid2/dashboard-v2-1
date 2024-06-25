@@ -39,7 +39,7 @@ export async function loginWithZalo(code_challenge:string,state:string) {
       console.log("login now....");
       const callbackUrl=encodeURIComponent('https://dashboard.theheai.xyz/auth/callback/zalo') 
     //  const askPermissionUrl = `https://oauth.zaloapp.com/v4/permission?app_id=${VITE_APP_ID}&redirect_uri=${callbackUrl}&code_challenge=${code_challenge}&state=${state}`;
-    const askPermissionUrl = `https://oauth.zaloapp.com/v4/permission?app_id=4220696386833253137&redirect_uri=${callbackUrl}&code_challenge=${code_challenge}&state=${state}`;
+    const askPermissionUrl = `https://oauth.zaloapp.com/v4/permission?app_id=${import.meta.env.VITE_APP_ID}&redirect_uri=${callbackUrl}&code_challenge=${code_challenge}&state=${state}`;
       console.log(askPermissionUrl);
 
       // Navigate to Zalo login page

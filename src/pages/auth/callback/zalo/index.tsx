@@ -62,7 +62,7 @@ const CallBackZalo: React.FC = () => {
           const initUser={
             name: 'Unknow Name',
             zaloId:'',
-            avatar:'https://res.cloudinary.com/yenvietsoft/image/upload/v1719123208/theheai-resource/user_kakjac.jpg'
+            avatar:''
         }
         let userInfoReturn = initUser
           try{
